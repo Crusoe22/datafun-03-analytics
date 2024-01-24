@@ -111,21 +111,21 @@ def main():
 
     txt_url = 'https://shakespeare.mit.edu/romeo_juliet/full.html'
 
-    csv_url = 'https://raw.githubusercontent.com/MainakRepositor/Datasets/master/World%20Happiness%20Data/2020.csv' 
+    #csv_url = 'https://raw.githubusercontent.com/MainakRepositor/Datasets/master/World%20Happiness%20Data/2020.csv' 
 
-    excel_url = 'https://github.com/bharathirajatut/sample-excel-dataset/raw/master/cattle.xls' 
+    #excel_url = 'https://github.com/bharathirajatut/sample-excel-dataset/raw/master/cattle.xls' 
     
-    json_url = 'http://api.open-notify.org/astros.json'
+    #json_url = 'http://api.open-notify.org/astros.json'
 
     txt_folder_name = 'data-txt'
-    csv_folder_name = 'data-csv'
-    excel_folder_name = 'data-excel' 
-    json_folder_name = 'data-json' 
+    #csv_folder_name = 'data-csv'
+    #excel_folder_name = 'data-excel' 
+    #json_folder_name = 'data-json' 
 
     txt_filename = 'data.txt'
-    csv_filename = 'data.csv'
-    excel_filename = 'data.xls' 
-    json_filename = 'data.json' 
+    #csv_filename = 'data.csv'
+    #excel_filename = 'data.xls' 
+    #json_filename = 'data.json' 
 
     fetch_and_write_txt_data(txt_folder_name, txt_filename, txt_url)
     #fetch_and_write_csv_data(csv_folder_name, csv_filename,csv_url)
