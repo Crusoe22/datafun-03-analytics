@@ -38,6 +38,7 @@ def fetch_and_write_txt_data(folder_name, filename, url):
     if response.status_code == 200:
         # Call your write function to save the response content
         write_txt_file(folder_name, filename, response.text)
+        print(write_txt_file)
     else:
         print(f"Failed to fetch data: {response.status_code}")
 
@@ -57,7 +58,7 @@ file types (e.g., text, CSV, JSON).'''
 from pathlib import Path
 
 def write_txt_file(folder_name, filename, data):
-    file_path = Path(folder_name).join_path(filename) # use pathlib to join paths
+    file_path = Path(folder_name).joinpath(filename) # use pathlib to join paths
     with file_path.open('w') as file:
         file.write(data)
         print(f"Text data saved to {file_path}")
