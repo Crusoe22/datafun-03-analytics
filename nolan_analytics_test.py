@@ -223,8 +223,6 @@ def process_excel_file(excel_folder_name, input_filename, output_filename):
     else:
         print(f"Failed to fetch data: {response.status_code}")
 
-
-
 def excel_data_file(folder_name, filename, output_filename):
     
     """Function 3. Process Excel Data: Extract and analyze data from Excel files to produce meaningful statistics, summaries, or insights, and 
@@ -260,6 +258,43 @@ def excel_data_file(folder_name, filename, output_filename):
 
 
 
+# Data acquisition - JSON data
+def fetch_and_write_json_data(folder_name, filename, url):
+    response = requests.get(url)
+    if response.status_code == 200:
+        write_json_file(folder_name, filename, response.content)
+    else:
+        print(f"Failed to fetch json data: {response.status_code}")
+
+# Write data - JSON
+def write_json_file(folder_name, filename, data):
+    file_path = Path(folder_name).joinpath(filename)  # use pathlib to join paths
+
+    with file_path.open('wb') as file:
+        file.write(data)
+        print(f"Binary data saved to {file_path}")
+
+# Process data - JSON
+def process_json_file(json_folder_name, input_filename, output_filename):
+    # Fetch the data
+    json_url = 'https://gist.githubusercontent.com/saltukalakus/124bba04327d8e5eab605d4fb66c53b8/raw/1043e2e62df1bb6118f0d8d1b81881fa45b46cbd/sample_users_with_id.json'
+    response = requests.get(json_url)
+    
+    if response.status_code == 200:
+        data = response.content
+        write_json_file(json_folder_name, input_filename, data)
+        write_json_file(json_folder_name, output_filename, data)
+       
+    else:
+        print(f"Failed to fetch data: {response.status_code}")
+
+
+def dict_json():
+    """Function 4. Process JSON Data: Process JSON data with dictionaries to demonstrate proficiency in working with labeled data. 
+    Parse the JSON data to extract relevant information and present it in a simplified, human-readable text format."""
+
+
+
 def main():
     ''' Main function to demonstrate module capabilities. '''
    
@@ -271,28 +306,28 @@ def main():
 
     excel_url = 'https://github.com/bharathirajatut/sample-excel-dataset/raw/master/airline.xls' 
     
-    #json_url = 'https://dog.ceo/api/breeds/image/random'
+    json_url = 'https://gist.githubusercontent.com/saltukalakus/124bba04327d8e5eab605d4fb66c53b8/raw/1043e2e62df1bb6118f0d8d1b81881fa45b46cbd/sample_users_with_id.json'
 
     txt_folder_name = 'data-txt'
     csv_folder_name = 'data-csv'
     excel_folder_name = 'data-excel' 
-    #json_folder_name = 'data-json' 
+    json_folder_name = 'data-json' 
 
     txt_filename = 'data.txt'
     csv_filename = 'data.csv'
     excel_filename = 'data.xls' 
-    #json_filename = 'data.json' 
+    json_filename = 'data.json' 
 
 
     fetch_and_write_txt_data(txt_folder_name, txt_filename, txt_url)
     fetch_and_write_csv_data(csv_folder_name, csv_filename, csv_url)
     fetch_and_write_excel_data(excel_folder_name, excel_filename, excel_url)
-    #fetch_and_write_json_data(json_folder_name, json_filename, json_url)
+    fetch_and_write_json_data(json_folder_name, json_filename, json_url)
 
     process_txt_file(txt_folder_name,'data.txt', 'results_txt.txt')
     process_csv_file(csv_folder_name,'data.csv', 'results_csv.txt')
     process_excel_file(excel_folder_name,'data.xls', 'results_xls.txt')
-    #process_json_file(json_folder_name,'data.json', 'results_json.txt')
+    process_json_file(json_folder_name,'data.json', 'results_json.txt')
     
 
 
