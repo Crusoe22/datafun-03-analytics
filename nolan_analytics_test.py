@@ -14,6 +14,7 @@ import io #CHECK
 # External import
 import requests 
 import pandas as pd
+import xlrd # This helps to handle the xls data
 
 #Local module imports 
 
@@ -96,12 +97,6 @@ def fetch_txt_data(folder_name, url):
     except IOError as e:
         print(f"I/O error({e.errno}): {e.strerror}")
 
-
-
-'''Function 2. Process CSV Data: Process CSV files with tuples to demonstrate proficiency in 
-working with tabular data. Extract and analyze data from CSV files to produce meaningful statistics, 
-summaries, or insights, and save the insights as text files.'''
-
 # Data acquisition - CSV data
 def fetch_and_write_csv_data(folder_name, filename, url):
     response = requests.get(url)
@@ -143,7 +138,6 @@ def process_csv_file(csv_folder_name, input_filename, output_filename):
         create_data_csv(csv_folder_name, output_filename, input_filename)
     else:
         print(f"Failed to fetch data: {response.status_code}")
-
 
 def create_data_csv(csv_folder_name, data_csv_file, input_filename):
     
@@ -188,7 +182,81 @@ def create_data_csv(csv_folder_name, data_csv_file, input_filename):
            file.write(f"{ii}\n") 
             
         print(f"Displayed csv data in tuple {data_csv_file}")
+
+
+# Data acquisition - excel data
+def fetch_and_write_excel_data(folder_name, filename, url):
+    response = requests.get(url)
+    if response.status_code == 200:
+        write_excel_file(folder_name, filename, response.content)
+    else:
+        print(f"Failed to fetch Excel data: {response.status_code}")
+
+# Write Data - Excel
+def write_excel_file(folder_name, filename, data):
+    file_path = Path(folder_name).joinpath(filename)  # use pathlib to join paths
+
+    with open(file_path, 'wb') as file:
+        file.write(data)
+        print(f"Excel data saved to {file_path}")
+
+# Process data - Excels
+def process_excel_file(excel_folder_name, input_filename, output_filename):
+    # Fetch the data
+    excel_url = 'https://github.com/bharathirajatut/sample-excel-dataset/raw/master/airline.xls'
+    response = requests.get(excel_url)
+    
+    if response.status_code == 200:
+        data = response.content
+        write_excel_file(excel_folder_name, input_filename, data)
+
+        # Use pandas to read Excel data directly from binary data
+        excel_data = pd.read_excel(io.BytesIO(data), sheet_name='Sheet1')  # Update 'Sheet1' to the actual sheet name
+
+        # Convert the read Excel data to CSV format
+        #processed_data = excel_data.to_csv(index=False)
+        excel_data_file(excel_folder_name, input_filename, output_filename)
+        # Write the processed data to a CSV file
+        #csv_output_filename = output_filename.replace('.xls', '.csv')
+        #write_csv_file(excel_folder_name, csv_output_filename, processed_data)
         
+    else:
+        print(f"Failed to fetch data: {response.status_code}")
+
+
+
+def excel_data_file(folder_name, filename, output_filename):
+    
+    """Function 3. Process Excel Data: Extract and analyze data from Excel files to produce meaningful statistics, summaries, or insights, and 
+    save the insights as text files."""
+
+
+    # Load the Excel file into a pandas DataFrame
+    file_path = Path(folder_name).joinpath(filename)  # use pathlib to join paths
+    file_txt_path = Path(folder_name).joinpath(output_filename)  # use pathlib to join paths
+    df = pd.read_excel(file_path)
+
+    columns_to_process = ['Y', 'W', 'R', 'L', 'K']
+
+    with file_txt_path.open('w', encoding='utf-8') as file:
+        file.write(f"\nThese are some insightful statistics from the xls data.\n")
+
+    for column_name in columns_to_process:
+        # Extract values from column B
+        column_values = df.loc[2:33, column_name]
+
+        # Calculate sum, min, max, and mean
+        total_sum = column_values.sum()
+        min_value = column_values.min()
+        max_value = column_values.max()
+        mean_value = column_values.mean()
+
+       
+        with file_txt_path.open('a', encoding='utf-8') as file:
+            file.write(f"\nThe sum of all values in column {column_name} is: {total_sum}")
+            file.write(f"\nThe minimum value in column {column_name} is: {min_value}")
+            file.write(f"\nThe maximum value in column {column_name} is: {max_value}")
+            file.write(f"\nThe mean of all values in column {column_name} is: {mean_value}\n")
 
 
 
@@ -201,29 +269,29 @@ def main():
 
     csv_url = 'https://raw.githubusercontent.com/MainakRepositor/Datasets/master/Weather%20Data/city_attributes.csv' 
 
-    #excel_url = 'https://github.com/bharathirajatut/sample-excel-dataset/raw/master/cattle.xls' 
+    excel_url = 'https://github.com/bharathirajatut/sample-excel-dataset/raw/master/airline.xls' 
     
     #json_url = 'https://dog.ceo/api/breeds/image/random'
 
     txt_folder_name = 'data-txt'
     csv_folder_name = 'data-csv'
-    # excel_folder_name = 'data-excel' 
+    excel_folder_name = 'data-excel' 
     #json_folder_name = 'data-json' 
 
     txt_filename = 'data.txt'
     csv_filename = 'data.csv'
-    #excel_filename = 'data.xls' 
+    excel_filename = 'data.xls' 
     #json_filename = 'data.json' 
 
 
     fetch_and_write_txt_data(txt_folder_name, txt_filename, txt_url)
     fetch_and_write_csv_data(csv_folder_name, csv_filename, csv_url)
-    #fetch_and_write_excel_data(excel_folder_name, excel_filename, excel_url)
+    fetch_and_write_excel_data(excel_folder_name, excel_filename, excel_url)
     #fetch_and_write_json_data(json_folder_name, json_filename, json_url)
 
     process_txt_file(txt_folder_name,'data.txt', 'results_txt.txt')
     process_csv_file(csv_folder_name,'data.csv', 'results_csv.txt')
-    #process_excel_file(excel_folder_name,'data.xls', 'results_xls.txt')
+    process_excel_file(excel_folder_name,'data.xls', 'results_xls.txt')
     #process_json_file(json_folder_name,'data.json', 'results_json.txt')
     
 

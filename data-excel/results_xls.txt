@@ -1,0 +1,27 @@
+
+These are some insightful statistics from the xls data.
+
+The sum of all values in column Y is: 319.038
+The minimum value in column Y is: 1.569
+The maximum value in column Y is: 23.619
+The mean of all values in column Y is: 10.6346
+
+The sum of all values in column W is: 21.62
+The minimum value in column W is: 0.278
+The maximum value in column W is: 1.779
+The mean of all values in column W is: 0.7206666666666667
+
+The sum of all values in column R is: 10.994299999999999
+The minimum value in column R is: 0.1883
+The maximum value in column R is: 0.5879
+The mean of all values in column R is: 0.3664766666666666
+
+The sum of all values in column L is: 118.58900000000001
+The minimum value in column L is: 1.388
+The maximum value in column L is: 6.852
+The mean of all values in column L is: 3.952966666666667
+
+The sum of all values in column K is: 118.39
+The minimum value in column K is: 0.564
+The maximum value in column K is: 9.508
+The mean of all values in column K is: 3.9463333333333335
