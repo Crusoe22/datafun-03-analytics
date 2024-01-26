@@ -1,2 +1,0 @@
-
-Word count of 'results_txt.txt': 5

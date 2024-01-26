@@ -8,7 +8,6 @@ the processed data to files."""
 import csv
 from io import StringIO 
 from pathlib import Path
-import io 
 
 # External import
 import requests 
@@ -16,8 +15,7 @@ import pandas as pd
 import json
 
 #Local module imports 
-
-#Add local imports
+import Nolan_utils
 
 
 # Fetch and manipulate txt data.
@@ -180,7 +178,6 @@ def create_data_csv(csv_folder_name, data_csv_file, input_filename):
             
         print(f"Displayed csv data in tuple {data_csv_file}")
 
-
 # Data acquisition - excel data
 def fetch_and_write_excel_data(folder_name, filename, url):
     response = requests.get(url)
@@ -241,8 +238,6 @@ def excel_data_file(folder_name, filename, output_filename):
                        f"\nThe maximum value in column {column_name} is: {max_value}"
                        f"\nThe mean of all values in column {column_name} is: {mean_value}\n")
 
-
-
 # Fetch JSON data
 def fetch_and_write_json_data(folder_name, filename, url):
     response = requests.get(url)
@@ -273,7 +268,7 @@ def process_json_file(json_folder_name, input_filename, output_filename):
     else:
         print(f"Failed to fetch data: {response.status_code}")
 
-
+# Analyze and format JSON data
 def dict_json(folder_name, filename, output_filename):
     """Function 4. Process JSON Data: Process JSON data with dictionaries to demonstrate proficiency in working with labeled data. 
     Parse the JSON data to extract relevant information and present it in a simplified, human-readable text format."""
@@ -289,11 +284,11 @@ def dict_json(folder_name, filename, output_filename):
     with file_txt_path.open('w', encoding='utf-8') as file:
         for i in user_data:
         # Extract relevant information
-            user_id = i["user_id"]
-            email = i["email"] 
+            user_id = i["user_id"] if "user_id" in i else None
+            email = i["email"] if "email" in i else None
             name = i["name"] if "name" in i else None
-            given_name = i["given_name"]
-            family_name = i["family_name"]
+            given_name = i["given_name"] if "given_name" in i else None
+            family_name = i["family_name"] if "family_name" in i else None
             nickname = i["nickname"] if "nickname" in i else None
             last_ip = i["last_ip"] if "last_ip" in i else None
             logins_count = i["logins_count"] if "logins_count" in i else None
@@ -307,52 +302,7 @@ def dict_json(folder_name, filename, output_filename):
                     f"{family_name}\nNickname: {nickname}\nLast IP: {last_ip}\nLogins Count: {logins_count}\nCreated At:"
                     f"{created_at}\nUpdated At: {updated_at}\nLast Login: {last_login}\nEmail Verified: {email_verified}\n\n")
 
-    ''' with file_txt_path.open('w', encoding='utf-8') as file:
-        for i in user_data:
-            
-            if "user_id" in i:
-                user_id = i["user_id"]
-                else
-                file.write(f"User ID: {user_id}\n")
-            elif "email" in i:
-                email = i["email"]
-                file.write(f"User ID: {email}\n")
-            elif "name" in i:
-                name = i["name"] 
-                file.write(f"User ID: {name}\n")
-            elif "given_name" in i:
-                given_name = i["given_name"]
-                file.write(f"User ID: {given_name}\n")
-            elif "family_name" in i:
-                family_name = i["family_name"]
-                file.write(f"User ID: {family_name}\n")
-            elif "nickname" in i:
-                nickname = i["nickname"]
-                file.write(f"User ID: {nickname}\n")
-            elif "last_ip" in i:
-                last_ip = i["last_ip"]
-                file.write(f"User ID: {last_ip}\n")
-            elif "logins_count" in i:
-                logins_count = i["logins_count"]
-                file.write(f"User ID: {logins_count}\n")
-            elif "created_at" in i:
-                created_at = i["created_at"]
-                file.write(f"User ID: {created_at}\n")
-            elif "updated_at" in i:
-                updated_at = i["updated_at"]
-                file.write(f"User ID: {updated_at}\n")
-            elif "last_login" in i:
-                last_login = i["last_login"]
-                file.write(f"User ID: {last_login}\n")
-            elif "email_verified" in i:
-                email_verified = i["email_verified"]
-                file.write(f"User ID: {email_verified}\n")
-        
-        print (i)'''
-            
-
-
-
+# Main finction
 def main():
     ''' Main function to demonstrate module capabilities. '''
    
