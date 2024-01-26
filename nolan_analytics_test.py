@@ -1,40 +1,41 @@
-
-
-# Project Module 3 
-"""Python module that demonstrates skills in fetching data from the web, 
-processing it using Python collections, and writing the processed data 
-to different file formats."""
+"""Project 3 emphasizes skills in using Git for version control, 
+creating and managing Python virtual environments, and handling different
+types of data. The project involves fetching data from the web,
+processing it using appropriate Python collections, and writing
+the processed data to files."""
 
 # Standard library imports
 import csv
-from io import StringIO #Check this
+from io import StringIO 
 from pathlib import Path
-import io #CHECK
+import io 
 
 # External import
 import requests 
 import pandas as pd
-import xlrd # This helps to handle the xls data
+import json
 
 #Local module imports 
 
 #Add local imports
 
 
-# Data acquisition - text data
+# Fetch and manipulate txt data.
 def fetch_and_write_txt_data(folder_name, filename, url):
     response = requests.get(url)
     if response.status_code == 200:
-        write_txt_file(folder_name, filename, response.text) # Call function to save content
+        # Call function to save content 
+        write_txt_file(folder_name, filename, response.text) 
         print(f"Text data saved to {filename}")
     else:
         print(f"Failed to fetch data: {response.status_code}")
 
 # Function created to call and write text file creating data.txt file
-def write_txt_file(folder_name, filename, data):
-    file_path = Path(folder_name).joinpath(filename)  # use pathlib to join paths
+def write_txt_file(folder_name, filename, data): 
+    # Create path
+    file_path = Path(folder_name).joinpath(filename)
 
-    with file_path.open('w', encoding='utf-8') as file: #, encoding='utf-8-sig'
+    with file_path.open('w', encoding='utf-8') as file: 
         file.write(data)
         
 # Process Data - text 
@@ -46,17 +47,15 @@ def process_txt_file(folder_name, input_filename, output_filename):
     if response.status_code == 200:
         data = response.text
         write_txt_file(folder_name, input_filename, data)
-        # processed_data = data  
         write_txt_requests_file(folder_name, output_filename, input_filename)
 
     else:
         print(f"Failed to fetch data: {response.status_code}")
 
+#Analyze text data to generate statistics
 def write_txt_requests_file(txt_folder_name, data_txt_file, input_filename):
-    """Function 1. Process Text Data: Process text with lists and sets to demonstrate proficiency in working 
-    with text files. Analyze text data to generate statistics like word count, frequency of words, etc., and format 
-    these findings into a readable text file."""
-    file_path = Path(txt_folder_name).joinpath(input_filename)  # use pathlib to join paths
+    # Create path
+    file_path = Path(txt_folder_name).joinpath(input_filename)
     file_path_re = Path(txt_folder_name).joinpath(data_txt_file)
     
     with file_path.open('r', encoding='utf-8') as file: 
@@ -68,8 +67,8 @@ def write_txt_requests_file(txt_folder_name, data_txt_file, input_filename):
             word_freq[word] = word_freq.get(word, 0) + 1
 
     with file_path_re.open('w', encoding='utf-8') as file:
-        file.write(f"\nWord count of file: {word_count}\n")
-        file.write(f"\nWord frequency of file: {word_freq}\n")
+        file.write(f"\nWord count of file: {word_count}\n"
+                   f"\nWord frequency of file: {word_freq}\n")
         print(f"Generated statistics in {data_txt_file}")
           
 # Exception reporting
@@ -77,8 +76,6 @@ def fetch_txt_data(folder_name, url):
     try:
         response = requests.get(url)
         response.raise_for_status()  
-        # Will raise an HTTPError 
-        # if the HTTP request returns an unsuccessful status code
 
         # Assuming the response content is text data
         file_path = Path(folder_name) / 'data.txt'
@@ -97,7 +94,7 @@ def fetch_txt_data(folder_name, url):
     except IOError as e:
         print(f"I/O error({e.errno}): {e.strerror}")
 
-# Data acquisition - CSV data
+# Fetch CSV data
 def fetch_and_write_csv_data(folder_name, filename, url):
     response = requests.get(url)
     if response.status_code == 200:
@@ -105,9 +102,10 @@ def fetch_and_write_csv_data(folder_name, filename, url):
     else:
         print(f"Failed to fetch data: {response.status_code}")
 
-# Write Data - CSV 
+# Write CSV data
 def write_csv_file(folder_name, filename, data):
-    file_path = Path(folder_name).joinpath(filename)  # use pathlib to join paths
+    # Create path
+    file_path = Path(folder_name).joinpath(filename)
 
     # Parse CSV data
     csv_data = parse_csv_data(data)
@@ -117,7 +115,7 @@ def write_csv_file(folder_name, filename, data):
         csv_writer.writerows(csv_data)
         print(f"CSV data saved to {file_path}")
 
-# function to manipulate the csv data in this example, transforming to a row vs. 1 charac line straight down
+# Function to manipulate the CSV data
 def parse_csv_data(csv_text):
     csv_data = []
     csv_reader = csv.reader(StringIO(csv_text))
@@ -125,7 +123,7 @@ def parse_csv_data(csv_text):
         csv_data.append(row)
     return csv_data
 
-# Process the data - CSV
+# Process CSV Data
 def process_csv_file(csv_folder_name, input_filename, output_filename):
     # Fetch the data
     csv_url = 'https://raw.githubusercontent.com/MainakRepositor/Datasets/master/Weather%20Data/city_attributes.csv'
@@ -134,27 +132,25 @@ def process_csv_file(csv_folder_name, input_filename, output_filename):
     if response.status_code == 200:
         data = response.text
         write_csv_file(csv_folder_name, input_filename, data)
-        # processed_data = data 
         create_data_csv(csv_folder_name, output_filename, input_filename)
     else:
         print(f"Failed to fetch data: {response.status_code}")
 
+# Extract and analyze data from CSV files
 def create_data_csv(csv_folder_name, data_csv_file, input_filename):
-    
-    '''Function 2. Process CSV Data: Process CSV files with tuples to demonstrate proficiency in 
-    working with tabular data. Extract and analyze data from CSV files to produce meaningful statistics, 
-    summaries, or insights, and save the insights as text files.'''
-    
-    file_path = Path(csv_folder_name).joinpath(input_filename)  # use pathlib to join paths
+    # Create path
+    file_path = Path(csv_folder_name).joinpath(input_filename)
     file_path_re = Path(csv_folder_name).joinpath(data_csv_file)
     
     tuple_data = ()
     tuple_list = list(tuple_data)
 
+    # Variables for counter
     us_count = 0
     canada_count = 0
     israel_count = 0
 
+    # Read from path
     with file_path.open('r', encoding='utf-8') as file: 
         reader = csv.reader(file)
         for i in reader:
@@ -174,9 +170,10 @@ def create_data_csv(csv_folder_name, data_csv_file, input_filename):
             israel_count += 1
             
     with file_path_re.open('w', encoding='utf-8') as file:
-        file.write(f"\nNumber of cities in the United States: {us_count}")
-        file.write(f"\nNumber of cities in Canada: {canada_count}")
-        file.write(f"\nNumber of cities in Israel: {israel_count}\n")
+        file.write(f"\nNumber of cities in the United States: {us_count}"
+                   f"\nNumber of cities in Canada: {canada_count}"
+                   f"\nNumber of cities in Israel: {israel_count}\n")
+        
         file.write(f"\nDisplay tuple in columns:")
         for ii in tuple_data:
            file.write(f"{ii}\n") 
@@ -192,15 +189,15 @@ def fetch_and_write_excel_data(folder_name, filename, url):
     else:
         print(f"Failed to fetch Excel data: {response.status_code}")
 
-# Write Data - Excel
+# Write Excel data
 def write_excel_file(folder_name, filename, data):
-    file_path = Path(folder_name).joinpath(filename)  # use pathlib to join paths
+    file_path = Path(folder_name).joinpath(filename)
 
     with open(file_path, 'wb') as file:
         file.write(data)
         print(f"Excel data saved to {file_path}")
 
-# Process data - Excels
+# Process Excel data
 def process_excel_file(excel_folder_name, input_filename, output_filename):
     # Fetch the data
     excel_url = 'https://github.com/bharathirajatut/sample-excel-dataset/raw/master/airline.xls'
@@ -209,31 +206,19 @@ def process_excel_file(excel_folder_name, input_filename, output_filename):
     if response.status_code == 200:
         data = response.content
         write_excel_file(excel_folder_name, input_filename, data)
-
-        # Use pandas to read Excel data directly from binary data
-        excel_data = pd.read_excel(io.BytesIO(data), sheet_name='Sheet1')  # Update 'Sheet1' to the actual sheet name
-
-        # Convert the read Excel data to CSV format
-        #processed_data = excel_data.to_csv(index=False)
         excel_data_file(excel_folder_name, input_filename, output_filename)
-        # Write the processed data to a CSV file
-        #csv_output_filename = output_filename.replace('.xls', '.csv')
-        #write_csv_file(excel_folder_name, csv_output_filename, processed_data)
         
     else:
         print(f"Failed to fetch data: {response.status_code}")
 
+# Extract and analyze data from Excel file
 def excel_data_file(folder_name, filename, output_filename):
-    
-    """Function 3. Process Excel Data: Extract and analyze data from Excel files to produce meaningful statistics, summaries, or insights, and 
-    save the insights as text files."""
-
-
     # Load the Excel file into a pandas DataFrame
-    file_path = Path(folder_name).joinpath(filename)  # use pathlib to join paths
-    file_txt_path = Path(folder_name).joinpath(output_filename)  # use pathlib to join paths
+    file_path = Path(folder_name).joinpath(filename)  
+    file_txt_path = Path(folder_name).joinpath(output_filename)  
     df = pd.read_excel(file_path)
 
+    # Column names in Execl sheet
     columns_to_process = ['Y', 'W', 'R', 'L', 'K']
 
     with file_txt_path.open('w', encoding='utf-8') as file:
@@ -251,14 +236,14 @@ def excel_data_file(folder_name, filename, output_filename):
 
        
         with file_txt_path.open('a', encoding='utf-8') as file:
-            file.write(f"\nThe sum of all values in column {column_name} is: {total_sum}")
-            file.write(f"\nThe minimum value in column {column_name} is: {min_value}")
-            file.write(f"\nThe maximum value in column {column_name} is: {max_value}")
-            file.write(f"\nThe mean of all values in column {column_name} is: {mean_value}\n")
+            file.write(f"\nThe sum of all values in column {column_name} is: {total_sum}"
+                       f"\nThe minimum value in column {column_name} is: {min_value}"
+                       f"\nThe maximum value in column {column_name} is: {max_value}"
+                       f"\nThe mean of all values in column {column_name} is: {mean_value}\n")
 
 
 
-# Data acquisition - JSON data
+# Fetch JSON data
 def fetch_and_write_json_data(folder_name, filename, url):
     response = requests.get(url)
     if response.status_code == 200:
@@ -266,7 +251,7 @@ def fetch_and_write_json_data(folder_name, filename, url):
     else:
         print(f"Failed to fetch json data: {response.status_code}")
 
-# Write data - JSON
+# Write JSON data
 def write_json_file(folder_name, filename, data):
     file_path = Path(folder_name).joinpath(filename)  # use pathlib to join paths
 
@@ -274,7 +259,7 @@ def write_json_file(folder_name, filename, data):
         file.write(data)
         print(f"Binary data saved to {file_path}")
 
-# Process data - JSON
+# Process JSON data
 def process_json_file(json_folder_name, input_filename, output_filename):
     # Fetch the data
     json_url = 'https://gist.githubusercontent.com/saltukalakus/124bba04327d8e5eab605d4fb66c53b8/raw/1043e2e62df1bb6118f0d8d1b81881fa45b46cbd/sample_users_with_id.json'
@@ -283,15 +268,88 @@ def process_json_file(json_folder_name, input_filename, output_filename):
     if response.status_code == 200:
         data = response.content
         write_json_file(json_folder_name, input_filename, data)
-        write_json_file(json_folder_name, output_filename, data)
+        dict_json(json_folder_name, input_filename, output_filename)
        
     else:
         print(f"Failed to fetch data: {response.status_code}")
 
 
-def dict_json():
+def dict_json(folder_name, filename, output_filename):
     """Function 4. Process JSON Data: Process JSON data with dictionaries to demonstrate proficiency in working with labeled data. 
     Parse the JSON data to extract relevant information and present it in a simplified, human-readable text format."""
+    file_path = Path(folder_name).joinpath(filename)  
+    file_txt_path = Path(folder_name).joinpath(output_filename) 
+
+    with file_path.open('r', encoding='utf-8') as file:
+        json_data = file.read()
+
+    # Parse JSON data
+    user_data = json.loads(json_data)
+    
+    with file_txt_path.open('w', encoding='utf-8') as file:
+        for i in user_data:
+        # Extract relevant information
+            user_id = i["user_id"]
+            email = i["email"] 
+            name = i["name"] if "name" in i else None
+            given_name = i["given_name"]
+            family_name = i["family_name"]
+            nickname = i["nickname"] if "nickname" in i else None
+            last_ip = i["last_ip"] if "last_ip" in i else None
+            logins_count = i["logins_count"] if "logins_count" in i else None
+            created_at = i["created_at"] if "created_at" in i else None
+            updated_at = i["updated_at"] if "updated_at" in i else None
+            last_login = i["last_login"] if "last_login" in i else None
+            email_verified = i["email_verified"] if "email_verified" in i else None
+
+
+            file.write(f"User ID: {user_id}\nEmail: {email}\nName: {name}\nGiven Name: {given_name}\nFamily Name:"
+                    f"{family_name}\nNickname: {nickname}\nLast IP: {last_ip}\nLogins Count: {logins_count}\nCreated At:"
+                    f"{created_at}\nUpdated At: {updated_at}\nLast Login: {last_login}\nEmail Verified: {email_verified}\n\n")
+
+    ''' with file_txt_path.open('w', encoding='utf-8') as file:
+        for i in user_data:
+            
+            if "user_id" in i:
+                user_id = i["user_id"]
+                else
+                file.write(f"User ID: {user_id}\n")
+            elif "email" in i:
+                email = i["email"]
+                file.write(f"User ID: {email}\n")
+            elif "name" in i:
+                name = i["name"] 
+                file.write(f"User ID: {name}\n")
+            elif "given_name" in i:
+                given_name = i["given_name"]
+                file.write(f"User ID: {given_name}\n")
+            elif "family_name" in i:
+                family_name = i["family_name"]
+                file.write(f"User ID: {family_name}\n")
+            elif "nickname" in i:
+                nickname = i["nickname"]
+                file.write(f"User ID: {nickname}\n")
+            elif "last_ip" in i:
+                last_ip = i["last_ip"]
+                file.write(f"User ID: {last_ip}\n")
+            elif "logins_count" in i:
+                logins_count = i["logins_count"]
+                file.write(f"User ID: {logins_count}\n")
+            elif "created_at" in i:
+                created_at = i["created_at"]
+                file.write(f"User ID: {created_at}\n")
+            elif "updated_at" in i:
+                updated_at = i["updated_at"]
+                file.write(f"User ID: {updated_at}\n")
+            elif "last_login" in i:
+                last_login = i["last_login"]
+                file.write(f"User ID: {last_login}\n")
+            elif "email_verified" in i:
+                email_verified = i["email_verified"]
+                file.write(f"User ID: {email_verified}\n")
+        
+        print (i)'''
+            
 
 
 
@@ -300,36 +358,35 @@ def main():
    
     print(f"Name: {'datafun-03-analytics-Nolan Moss'}\n")
 
+    # Url variables
     txt_url = 'https://www.gutenberg.org/cache/epub/6130/pg6130.txt' 
-
     csv_url = 'https://raw.githubusercontent.com/MainakRepositor/Datasets/master/Weather%20Data/city_attributes.csv' 
-
     excel_url = 'https://github.com/bharathirajatut/sample-excel-dataset/raw/master/airline.xls' 
-    
     json_url = 'https://gist.githubusercontent.com/saltukalakus/124bba04327d8e5eab605d4fb66c53b8/raw/1043e2e62df1bb6118f0d8d1b81881fa45b46cbd/sample_users_with_id.json'
 
+    # Data folder variables
     txt_folder_name = 'data-txt'
     csv_folder_name = 'data-csv'
     excel_folder_name = 'data-excel' 
     json_folder_name = 'data-json' 
 
+    # Data file variables
     txt_filename = 'data.txt'
     csv_filename = 'data.csv'
     excel_filename = 'data.xls' 
     json_filename = 'data.json' 
 
-
+    # Call fetch functions
     fetch_and_write_txt_data(txt_folder_name, txt_filename, txt_url)
     fetch_and_write_csv_data(csv_folder_name, csv_filename, csv_url)
     fetch_and_write_excel_data(excel_folder_name, excel_filename, excel_url)
     fetch_and_write_json_data(json_folder_name, json_filename, json_url)
 
+    # Call process function
     process_txt_file(txt_folder_name,'data.txt', 'results_txt.txt')
     process_csv_file(csv_folder_name,'data.csv', 'results_csv.txt')
     process_excel_file(excel_folder_name,'data.xls', 'results_xls.txt')
-    process_json_file(json_folder_name,'data.json', 'results_json.txt')
-    
-
+    process_json_file(json_folder_name,'data.json', 'results_json.txt')    
 
 if __name__ == "__main__":
     main()

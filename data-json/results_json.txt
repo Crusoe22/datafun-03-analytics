@@ -1,67 +1,65 @@
-[
-  {
-    "user_id": "583c3ac3f38e84297c002546",
-    "email": "test@test.com",
-    "name": "test@test.com",
-    "given_name": "Hello",
-    "family_name": "Test",
-    "nickname": "test",
-    "last_ip": "94.121.163.63",
-    "logins_count": 15,
-    "created_at": "2016-11-28T14:10:11.338Z",
-    "updated_at": "2016-12-02T01:17:29.310Z",
-    "last_login": "2016-12-02T01:17:29.310Z",
-    "email_verified": true
-  },
-  {
-    "user_id": "583c5484cb79a5fe593425a9",
-    "email": "test1@test.com",
-    "name": "test1@test.com",
-    "given_name": "Hello1",
-    "family_name": "Test1",
-    "nickname": "test1",
-    "last_ip": "94.121.168.53",
-    "logins_count": 1,
-    "created_at": "2016-11-28T16:00:04.209Z",
-    "updated_at": "2016-11-28T16:00:47.203Z",
-    "last_login": "2016-11-28T16:00:47.203Z",
-    "email_verified": true
-  },
-  {
-    "user_id": "583c57672c7686377d2f66c9",
-    "email": "aaa@aaa.com",
-    "name": "aaa@aaa.com",
-    "given_name": "John",
-    "family_name": "Dough",
-    "nickname": "aaa",
-    "last_ip": "94.121.168.53",
-    "logins_count": 2,
-    "created_at": "2016-11-28T16:12:23.777Z",
-    "updated_at": "2016-11-28T16:12:52.353Z",
-    "last_login": "2016-11-28T16:12:52.353Z",
-    "email_verified": true
-  },
-  {
-    "user_id": "5840b954da0529cd293d76fe",
-    "email": "a@a.com",
-    "name": "a@a.com",
-    "given_name": "Jane",
-    "family_name": "Dough",
-    "nickname": "a",
-    "last_ip": "94.121.163.63",
-    "logins_count": 3,
-    "created_at": "2016-12-01T23:59:16.473Z",
-    "updated_at": "2016-12-01T23:59:53.474Z",
-    "last_login": "2016-12-01T23:59:53.474Z",
-    "email_verified": true
-  },
-  {
-    "user_id": "584a9d13e808bcf75f05f580",
-    "email": "test9999@test.com",
-    "given_name": "Dummy",
-    "family_name": "User",
-    "created_at": "2016-12-09T12:01:23.787Z",
-    "updated_at": "2016-12-09T12:01:23.787Z",
-    "email_verified": false
-  }
-]
+User ID: 583c3ac3f38e84297c002546
+Email: test@test.com
+Name: test@test.com
+Given Name: Hello
+Family Name:Test
+Nickname: test
+Last IP: 94.121.163.63
+Logins Count: 15
+Created At:2016-11-28T14:10:11.338Z
+Updated At: 2016-12-02T01:17:29.310Z
+Last Login: 2016-12-02T01:17:29.310Z
+Email Verified: True
+
+User ID: 583c5484cb79a5fe593425a9
+Email: test1@test.com
+Name: test1@test.com
+Given Name: Hello1
+Family Name:Test1
+Nickname: test1
+Last IP: 94.121.168.53
+Logins Count: 1
+Created At:2016-11-28T16:00:04.209Z
+Updated At: 2016-11-28T16:00:47.203Z
+Last Login: 2016-11-28T16:00:47.203Z
+Email Verified: True
+
+User ID: 583c57672c7686377d2f66c9
+Email: aaa@aaa.com
+Name: aaa@aaa.com
+Given Name: John
+Family Name:Dough
+Nickname: aaa
+Last IP: 94.121.168.53
+Logins Count: 2
+Created At:2016-11-28T16:12:23.777Z
+Updated At: 2016-11-28T16:12:52.353Z
+Last Login: 2016-11-28T16:12:52.353Z
+Email Verified: True
+
+User ID: 5840b954da0529cd293d76fe
+Email: a@a.com
+Name: a@a.com
+Given Name: Jane
+Family Name:Dough
+Nickname: a
+Last IP: 94.121.163.63
+Logins Count: 3
+Created At:2016-12-01T23:59:16.473Z
+Updated At: 2016-12-01T23:59:53.474Z
+Last Login: 2016-12-01T23:59:53.474Z
+Email Verified: True
+
+User ID: 584a9d13e808bcf75f05f580
+Email: test9999@test.com
+Name: None
+Given Name: Dummy
+Family Name:User
+Nickname: None
+Last IP: None
+Logins Count: None
+Created At:2016-12-09T12:01:23.787Z
+Updated At: 2016-12-09T12:01:23.787Z
+Last Login: None
+Email Verified: False
+
